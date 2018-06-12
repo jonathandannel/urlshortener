@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var PORT = 8080;
+
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -39,16 +40,17 @@ app.get("/urls", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  urlDatabase[generateRandomString()] = req.body.longURL;
-  res.redirect("/urls");
+  var generatedUrl = generateRandomString();
+  urlDatabase['' + generatedUrl] = req.body.longURL;
+  res.redirect("/urls/" + generatedUrl);
 });
 
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
-});
+})
 
 app.get("/urls/:id", (req, res) => {
-  let templateVars = { shortURL: req.params.id, longURL:  urlDatabase[req.params.id] };
+  let templateVars = { shortURL: [req.params.id, urlDatabase[req.params.id]] };
   res.render("urls_show", templateVars);
 });
 
