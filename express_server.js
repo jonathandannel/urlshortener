@@ -65,6 +65,12 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect("/urls");
 })
 
+app.post("/urls/:id/edit", (req, res) => {
+  urlDatabase[req.params.id] =
+  res.redirect("/urls");
+})
+
+
 
 app.listen(PORT, () => {
   console.log(`Express server listening on port ${PORT}`);

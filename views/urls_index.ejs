@@ -11,8 +11,12 @@
     <table class="main-table">
       <% urls.forEach(function (array) { %>
         <tr>
-          <td><%= array[0] %><td> <td><%= array[1] %></td>
-            <td>
+          <td><h2><a href="/urls/<%= array[0] %>"><%= array[0] %></a><td> <td style="padding-left: 30px"><%= array[1] %></h2></td>
+          <td style="padding-left: 40px">
+            <a href="/urls/<%= array[0] %>">
+              Edit
+            </a>
+            <td style="padding-left: 40px; padding-bottom: 10px">
               <form action="/urls/<%= array[0] %>/delete" method="POST">
                 <input type="submit" value="Delete">
               </form>
