@@ -10,16 +10,13 @@ app.set("view engine", "ejs");
 function generateRandomString() {
   var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   var numbers = '0123456789';
-
   var output = '';
-
   for (i = 0; i < 3; i++) {
     var currentLetter = Math.floor(Math.random() * 52);
     var currentNumber = Math.floor(Math.random() * 9);
     output += letters[currentLetter];
     output += numbers[currentNumber];
   }
-
   return output;
 }
 
@@ -66,11 +63,9 @@ app.post("/urls/:id/delete", (req, res) => {
 })
 
 app.post("/urls/:id/edit", (req, res) => {
-  urlDatabase[req.params.id] =
+  urlDatabase[req.params.id] = req.body.changedURL;
   res.redirect("/urls");
 })
-
-
 
 app.listen(PORT, () => {
   console.log(`Express server listening on port ${PORT}`);
