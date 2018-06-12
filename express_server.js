@@ -26,7 +26,7 @@ function generateRandomString() {
 var urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com",
-  "343n1hf": "http://www.help.net"
+  "33n1hf": "http://www.help.net"
 };
 
 app.get("/", (req, res) => {
@@ -67,5 +67,5 @@ app.post("/urls/:id/delete", (req, res) => {
 
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
+  console.log(`Express server listening on port ${PORT}`);
 });
