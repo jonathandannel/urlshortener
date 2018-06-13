@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 
 app.get("/urls", (req, res) => {
   let entries = Object.entries(urlDatabase); //array of key/value
-  let templateVars = { urls: entries};
+  let templateVars = { urls: entries };
   res.render("urls_index", templateVars);
 });
 

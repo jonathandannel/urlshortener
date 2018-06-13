@@ -20,10 +20,10 @@
         <td><h2><a href="/urls/<%= array[0] %>"><%= array[0] %></a><td>
           <td style="padding-left: 30px"><a href="<%= array[1] %>"><%= array[1] %></a></h2></td>
         <td style="padding-left: 40px">
-          <btn class="btn btn-info" href="/urls/<%= array[0] %>">
+          <a href="/urls/<%= array[0] %>"<btn class="btn btn-info">
             Edit
-          </a>
-          <td style="padding-left: 40px; padding-bottom: 5px">
+          </btn></a>
+          <td style="padding-left: 40px; padding-bottom: 1px">
             <form action="/urls/<%= array[0] %>/delete" method="POST">
               <input class="btn btn-danger" type="submit" value="Delete">
             </form>
