@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Tiny URL</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href=https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css />
-  <link rel="stylesheet" type="text/css" href="/css/main.css" />
-</head>
-
-<body>
-  <div class="jumbotron"><h1>Tiny URL Shortener<h1></div>
+<% include partials/header %>
 
   <div class="container" align="center">
     <h1 id="shortURL">Tiny: <a href="#"><%= shortURL[0] %></a></h1>
@@ -23,5 +12,4 @@
     <input type="submit" value="Update">
   </form>
 
-</body>
-</html>
+<% include partials/footer %>
