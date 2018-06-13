@@ -48,7 +48,8 @@ app.get("/", (req, res) => {
 
 app.get("/urls", (req, res) => {
   let entries = Object.entries(urlDatabase); //array of key/value
-  let templateVars = { username: req.cookies["username"], urls: entries };
+  let templateVars = { user: userDatabase[req.cookies['user_id']], urls: entries };
+  console.log(templateVars);
   res.render("urls_index", templateVars)
 });
 
@@ -59,12 +60,12 @@ app.post("/urls", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
-  var templateVars = { username: req.cookies["username"] };
+  var templateVars = { user: userDatabase[req.cookies['user_id']] };
   res.render("urls_new", templateVars);
 })
 
 app.get("/urls/:id", (req, res) => {
-  let templateVars = { username: req.cookies["username"], shortURL: [req.params.id, urlDatabase[req.params.id]] };
+  let templateVars = { user: userDatabase[req.cookies['user_id']], shortURL: [req.params.id, urlDatabase[req.params.id]] };
   res.render("urls_show", templateVars);
 });
 
@@ -72,6 +73,23 @@ app.get("/u/:shortURL", (req, res) => {
   var short = req.params.shortURL;
   var long = urlDatabase[short];
   res.redirect(long);
+});
+
+app.post("/register", (req, res) => {
+  var id = generateRandomString();
+  var email = req.body.email;
+  var pw = req.body.password;
+
+  userDatabase[id] = {
+    id: id,
+    email: email,
+    password: pw
+  };
+
+  console.log(id);
+  console.log('logging cookie: ', req.cookies);
+  res.cookie('user_id', id);
+  res.redirect('/urls');
 });
 
 app.post("/urls/:id/delete", (req, res) => {
@@ -85,32 +103,17 @@ app.post("/urls/:id/edit", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  res.cookie('username', req.body.username);
+  // res.cookie('username', req.body.username);
   res.redirect('/urls');
 });
 
 app.post("/logout", (req, res) => {
-  res.clearCookie('username');
+  res.clearCookie('user_id');
   res.redirect('/urls');
 });
 
 app.get("/register", (req, res) => {
   res.render("register")
-});
-
-app.post("/register", (req, res) => {
-  var id = generateRandomString();
-  var name = req.body.username;
-  var pw = req.body.password;
-
-  userDatabase[id] = {
-    id: id,
-    email: name,
-    password: pw
-  };
-
-  console.log(userDatabase);
-  res.redirect('/urls');
 });
 
 app.listen(PORT, () => {
