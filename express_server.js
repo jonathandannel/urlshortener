@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
 app.get("/urls", (req, res) => {
   let entries = Object.entries(urlDatabase); //array of key/value
   let templateVars = { username: req.cookies["username"], urls: entries };
-  console.log(templateVars);
+  console.log(templateVars)
   res.render("urls_index", templateVars);
 });
 
@@ -51,7 +51,7 @@ app.post("/urls", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
-  let templateVars = { username: req.cookies["username"] };
+  var templateVars = { username: req.cookies["username"] };
   res.render("urls_new", templateVars);
 })
 
@@ -81,9 +81,8 @@ app.post("/login", (req, res) => {
   res.redirect('/urls');
 });
 
-app.post("/logout", (req, res) => {
-  res.clearCookie('username');
-  res.redirect('/urls');
+app.post("/register", (req, res) => {
+  res.render("register")
 });
 
 app.listen(PORT, () => {
