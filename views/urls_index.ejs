@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" href=https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css />
-    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
   </head>
 <body>
   <div class="jumbotron" align="center">
@@ -18,8 +18,8 @@
     <% urls.forEach(function (array) { %>
       <tr>
         <td><h2><a href="/urls/<%= array[0] %>"><%= array[0] %></a><td>
-          <td style="padding-left: 30px"><a href="<%= array[1] %>"><%= array[1] %></a></h2></td>
-        <td style="padding-left: 40px">
+          <td class="url-table-items"><a href="<%= array[1] %>"><%= array[1] %></a></h2></td>
+        <td class="url-table-ietms">
           <a href="/urls/<%= array[0] %>"<btn class="btn btn-info">
             Edit
           </btn></a>
