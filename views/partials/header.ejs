@@ -14,16 +14,11 @@
       <input class="btn btn-info" type="submit" value="Logout">
     </form>
     <% } else { %>
-      <label for="Login">Username:</label>
-        <form style="display: inline-block" class="form-inline" action="/login" method="POST">
-        <input id="username" type="text" name="username">
-        <input class="btn btn-info" type="submit" value="Login">
-      </form>
+      <a href="/login"><button class="btn btn-info">Login</button></a>
       <a href="/register"><button class="btn btn-info">Register</button></a>
       <% } %>
     </div>
   </nav>
-
 
 <div class="jumbotron" align="center">
   <h1 class="display-4">TinyApp</h1>
@@ -31,7 +26,4 @@
   <p class="lead">
     <a class="btn btn-primary btn-lg" href="/urls/new" role="button">Shorten URL</a>
   </p>
-
-
-
-  </div>
+</div>

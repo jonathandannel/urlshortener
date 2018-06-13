@@ -103,7 +103,7 @@ app.post("/urls/:id/edit", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  // res.cookie('username', req.body.username);
+  console.log(req.body.email);
   res.redirect('/urls');
 });
 
@@ -113,8 +113,12 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-  res.render("register")
+  res.render("register");
 });
+
+app.get("/login", (req, res) => {
+  res.render("login");
+})
 
 app.listen(PORT, () => {
   console.log(`Express server listening on port ${PORT}`);

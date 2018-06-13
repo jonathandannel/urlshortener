@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href=https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+  </head>
+<body>
+
+  <div class="jumbotron" align="center">
+    <h1 style="margin-bottom: 10px"class="display-4">Login</h1>
+      <div class="container">
+        <form action="/login" method="POST">
+          <label style="padding-right: 5px;"for="email">Email:</label>
+          <input id="email" type="email" name="email">
+          <div style="margin-right: 33px">
+            <label for="password" style="padding-right: 8px;">Password:</label>
+            <input id="password" type="password" name="password">
+          </div>
+          <p><input style="margin-top: 15px" class="btn btn-info" type="submit" value="Login"></p>
+        </form>
+      </div>
+  </div>
+</body>
+</html>
