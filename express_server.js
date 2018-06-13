@@ -29,9 +29,18 @@ var urlDatabase = {
   "33n1hf": "http://www.help.net"
 };
 
-var userDatabase = {
-
-};
+const userDatabase = {
+  "userRandomID": {
+    id: "userRandomID",
+    email: "user@example.com",
+    password: "purple-monkey-dinosaur"
+  },
+ "user2RandomID": {
+    id: "user2RandomID",
+    email: "user2@example.com",
+    password: "dishwasher-funk"
+  }
+}
 
 app.get("/", (req, res) => {
   res.end("Hello!");
@@ -40,7 +49,6 @@ app.get("/", (req, res) => {
 app.get("/urls", (req, res) => {
   let entries = Object.entries(urlDatabase); //array of key/value
   let templateVars = { username: req.cookies["username"], urls: entries };
-  console.log(templateVars)
   res.render("urls_index", templateVars)
 });
 
@@ -91,7 +99,18 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  res.redirect('.urls');
+  var id = generateRandomString();
+  var name = req.body.username;
+  var pw = req.body.password;
+
+  userDatabase[id] = {
+    id: id,
+    email: name,
+    password: pw
+  };
+
+  console.log(userDatabase);
+  res.redirect('/urls');
 });
 
 app.listen(PORT, () => {
