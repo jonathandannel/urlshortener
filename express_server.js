@@ -41,7 +41,7 @@ app.get("/urls", (req, res) => {
   let entries = Object.entries(urlDatabase); //array of key/value
   let templateVars = { username: req.cookies["username"], urls: entries };
   console.log(templateVars)
-  res.render("urls_index", templateVars);
+  res.render("urls_index", templateVars)
 });
 
 app.post("/urls", (req, res) => {
@@ -88,6 +88,10 @@ app.post("/logout", (req, res) => {
 
 app.get("/register", (req, res) => {
   res.render("register")
+});
+
+app.post("/register", (req, res) => {
+  res.redirect('.urls');
 });
 
 app.listen(PORT, () => {
