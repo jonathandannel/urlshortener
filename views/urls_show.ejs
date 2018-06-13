@@ -5,13 +5,17 @@
   <title>Tiny URL</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href=https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css />
+  <link rel="stylesheet" type="text/css" href="/css/main.css" />
 </head>
 
 <body>
   <div class="jumbotron"><h1>Tiny URL Shortener<h1></div>
 
-  <h1 align="center"> SHORT URL: <%= shortURL[0] %></h1>
-  <h1 align="center"> LONG URL: <%= shortURL[1] %></h1>
+  <div class="container" align="center">
+    <h1 id="shortURL">Tiny: <a href="#"><%= shortURL[0] %></a></h1>
+    <button type="button" class="btn btn-success" id="copyButton">Copy</button>
+  </div>
+  <h1 align="center"> Source: <a href="#"><%= shortURL[1] %></a></h1>
 
   <form action="/urls/<%= shortURL[0] %>/edit" method="POST" style="margin:150px;">
     <label for="changedURL">Enter a URL:</label>

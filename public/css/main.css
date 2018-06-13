@@ -4,6 +4,16 @@
 }
 
 #index-delete-button {
-  padding-left: 40px;
   padding-bottom: 1px;
+}
+
+#shortURL {
+  display: inline-block;
+}
+
+#copyButton {
+  align: center;
+  display: inline-block;
+  margin-bottom: 15px;
+  margin-left: 20px;
 }
