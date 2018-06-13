@@ -6,9 +6,23 @@
   </head>
 <body>
   <div class="jumbotron" align="center">
-  <h1 class="display-4">TinyApp</h1>
-  <p class="lead">A simple solution for shortening URLs.</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="/urls/new" role="button">Shorten URL</a>
-  </p>
-</div>
+    <h1 class="display-4">TinyApp</h1>
+    <p class="lead">A simple solution for shortening URLs.</p>
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="/urls/new" role="button">Shorten URL</a>
+    </p>
+
+
+    <% if (username) { %>
+    <h1> Hello <%= username %>!</h1>
+    <form action="/logout" method="POST">
+      <input class="btn btn-info" type="submit" value="Logout">
+    </form>
+    <% } else { %>
+      <form action="/login" method="POST">
+        <label for="Login">Username:</label>
+        <input id="username" type="text" name="username">
+        <input class="btn btn-info" type="submit" value="Login">
+      </form>
+      <% } %>
+  </div>
