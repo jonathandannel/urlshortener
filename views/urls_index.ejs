@@ -5,26 +5,33 @@
     <link rel="stylesheet" href="main.css" />
   </head>
 <body>
-  <div class="jumbotron"><h1>Tiny URL Shortener<h1></div>
+  <div class="jumbotron" align="center">
+  <h1 class="display-4">TinyApp</h1>
+  <p class="lead">A simple solution for shortening URLs.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="/urls/new" role="button">Shorten URL</a>
+  </p>
+</div>
 
-  <div class="container">
-    <table class="main-table">
-      <% urls.forEach(function (array) { %>
-        <tr>
-          <td><h2><a href="/urls/<%= array[0] %>"><%= array[0] %></a><td> <td style="padding-left: 30px"><%= array[1] %></h2></td>
-          <td style="padding-left: 40px">
-            <a href="/urls/<%= array[0] %>">
-              Edit
-            </a>
-            <td style="padding-left: 40px; padding-bottom: 10px">
-              <form action="/urls/<%= array[0] %>/delete" method="POST">
-                <input type="submit" value="Delete">
-              </form>
-            </td>
-        </tr>
-      <% }) %>
-    </table>
-  </div>
+<div class="container" align="center">
+  <table class="main-table">
+    <% urls.forEach(function (array) { %>
+      <tr>
+        <td><h2><a href="/urls/<%= array[0] %>"><%= array[0] %></a><td>
+          <td style="padding-left: 30px"><a href="<%= array[1] %>"><%= array[1] %></a></h2></td>
+        <td style="padding-left: 40px">
+          <btn class="btn btn-info" href="/urls/<%= array[0] %>">
+            Edit
+          </a>
+          <td style="padding-left: 40px; padding-bottom: 5px">
+            <form action="/urls/<%= array[0] %>/delete" method="POST">
+              <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+          </td>
+      </tr>
+    <% }) %>
+  </table>
+</div>
 
 </body>
 </html>
