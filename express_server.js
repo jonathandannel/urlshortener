@@ -49,7 +49,6 @@ app.get("/", (req, res) => {
 app.get("/urls", (req, res) => {
   let entries = Object.entries(urlDatabase); //array of key/value
   let templateVars = { user: userDatabase[req.cookies['user_id']], urls: entries };
-  console.log(templateVars);
   res.render("urls_index", templateVars)
 });
 
@@ -86,8 +85,6 @@ app.post("/register", (req, res) => {
     password: pw
   };
 
-  console.log(id);
-  console.log('logging cookie: ', req.cookies);
   res.cookie('user_id', id);
   res.redirect('/urls');
 });
@@ -103,7 +100,24 @@ app.post("/urls/:id/edit", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  console.log(req.body.email);
+  console.log(req.body);
+  var found = false;
+  var errorMsg = 'Email not found.';
+  for (let user in userDatabase) {
+    let currentUser = userDatabase[user];
+    if (currentUser.email === req.body.email) {
+      if (currentUser.password === req.body.password) {
+        found = currentUser;
+      } else {
+        errorMsg = 'Incorrect password!';
+      }
+    }
+  }
+  if (found) {
+    res.cookie('user_id', found.id);
+  } else {
+    console.log(errorMsg);
+  }
   res.redirect('/urls');
 });
 
