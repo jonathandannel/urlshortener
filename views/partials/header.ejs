@@ -23,7 +23,9 @@
 <div class="jumbotron" align="center">
   <h1 class="display-4">TinyApp</h1>
   <p class="lead">A simple solution for shortening URLs.</p>
+  <% if (user) { %>
   <p class="lead">
     <a class="btn btn-primary btn-lg" href="/urls/new" role="button">Shorten URL</a>
   </p>
+  <% } %>
 </div>
