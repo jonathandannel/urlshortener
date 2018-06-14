@@ -10,7 +10,7 @@
     <div style="display: inline-block">
     <% if (userList[user]) { %>
     <form class="form-inline"action="/logout" method="POST">
-      <label style="margin-right: 12px">Hello, <%= userList[user].email  %></label>
+      <label style="margin-right: 12px"><b><%= userList[user].email %></b></label>
       <input class="btn btn-info" type="submit" value="Logout">
     </form>
     <% } else { %>
@@ -23,9 +23,9 @@
 <div class="jumbotron" align="center">
   <h1 class="display-4">TinyApp</h1>
   <p class="lead">A simple solution for shortening URLs.</p>
-  <% if (user) { %>
+  <% if (userList[user]) { %>
   <p class="lead">
-    <a class="btn btn-primary btn-lg" href="/urls/new" role="button">Shorten URL</a>
+    <a class="btn btn-primary btn-lg" href="/urls/new" role="button">New Short URL</a>
   </p>
   <% } %>
 </div>
