@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var PORT = 8080;
+const bcrypt = require('bcrypt');
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -9,6 +10,10 @@ const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
 app.set("view engine", "ejs");
+
+
+const password = "purple-monkey-dinosaur"; // you will probably this from req.params
+const hashedPassword = bcrypt.hashSync(password, 10);
 
 function generateRandomString() {
   var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -99,13 +104,15 @@ app.get("/u/:shortURL", (req, res) => {
 app.post("/register", (req, res) => {
   var id = generateRandomString();
   var email = req.body.email;
-  var pw = req.body.password;
+  var password = req.body.password;
+  var hashedPassword = bcrypt.hashSync(password, 10);
 
   userDatabase[id] = {
     id: id,
     email: email,
-    password: pw
+    password: hashedPassword
   };
+  console.log(hashedPassword);
 
   res.cookie('user_id', id);
   res.redirect('/urls');
@@ -118,13 +125,12 @@ app.post("/urls/:id/delete", (req, res) => {
 
 
 app.post("/login", (req, res) => {
-  console.log(req.body);
   var found = false;
   var errorMsg = 'Email not found.';
   for (let user in userDatabase) {
     let currentUser = userDatabase[user];
     if (currentUser.email === req.body.email) {
-      if (currentUser.password === req.body.password) {
+      if (bcrypt.compareSync(req.body.password, currentUser.password)) {
         found = currentUser;
       } else {
         errorMsg = 'Incorrect password!';
