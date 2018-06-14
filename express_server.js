@@ -80,7 +80,7 @@ app.get("/urls/new", (req, res) => {
 })
 
 app.get("/urls/:id", (req, res) => {
-  let templateVars = { user: userDatabase[req.cookies['user_id']], url:  urlDatabase[req.params.id], userList: userDatabase };
+  let templateVars = { user: req.cookies['user_id'], url:  urlDatabase[req.params.id], userList: userDatabase };
   console.log(templateVars);
   res.render("urls_show", templateVars);
 });
