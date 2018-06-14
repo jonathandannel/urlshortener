@@ -5,7 +5,6 @@
     <button type="button" class="btn btn-success" id="copyButton">Copy</button>
   </div>
   <h1 align="center"> Source: <a href="#"><%= url.long %></a></h1>
-  <h1 align="center">Created by <%= url.belongsTo %></h1>
 
   <form action="/urls/<%= url.short %>/edit" method="POST" style="margin:150px;" align="center">
     <label for="changedURL">Enter a URL:</label>

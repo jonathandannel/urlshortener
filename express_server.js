@@ -8,12 +8,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
+
 app.use(express.static(__dirname + '/public'));
 app.set("view engine", "ejs");
-
-
-const password = "purple-monkey-dinosaur"; // you will probably this from req.params
-const hashedPassword = bcrypt.hashSync(password, 10);
 
 function generateRandomString() {
   var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
