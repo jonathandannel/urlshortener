@@ -8,9 +8,9 @@
   <nav class="navbar navbar-light bg-light justify-content-between">
     <a class="navbar-brand" href="/urls">tinyApp</a>
     <div style="display: inline-block">
-    <% if (user) { %>
+    <% if (userList[user]) { %>
     <form class="form-inline"action="/logout" method="POST">
-      <label style="margin-right: 12px">Hello, <%= user.email %></label>
+      <label style="margin-right: 12px">Hello, <%= userList[user].email  %></label>
       <input class="btn btn-info" type="submit" value="Logout">
     </form>
     <% } else { %>

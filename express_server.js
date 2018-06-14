@@ -59,8 +59,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  let templateVars = { user: userDatabase[req.cookies['user_id']], urls: urlDatabase };
-  res.render("urls_index", templateVars)
+  let templateVars = { user: [req.cookies['user_id']], urls: urlDatabase, userList: userDatabase};
+  res.render("urls_index", templateVars);
 });
 
 app.post("/urls", (req, res) => {
@@ -68,19 +68,20 @@ app.post("/urls", (req, res) => {
   urlDatabase['' + generatedUrl] = {
     short: generatedUrl,
     long: req.body.longURL,
-    belongsTo: 'sadasdasd'
+    belongsTo: req.cookies['user_id']
   };
 
   res.redirect("/urls/" + generatedUrl);
 });
 
 app.get("/urls/new", (req, res) => {
-  var templateVars = { user: userDatabase[req.cookies['user_id']] };
+  var templateVars = { user: userDatabase[req.cookies['user_id']], userList: userDatabase };
   res.render("urls_new", templateVars);
 })
 
 app.get("/urls/:id", (req, res) => {
-  let templateVars = { user: userDatabase[req.cookies['user_id']], url:  urlDatabase[req.params.id] };
+  let templateVars = { user: userDatabase[req.cookies['user_id']], url:  urlDatabase[req.params.id], userList: userDatabase };
+  console.log(templateVars);
   res.render("urls_show", templateVars);
 });
 
