@@ -144,25 +144,25 @@ app.post("/urls/:id/delete", (req, res) => {
 
 app.post("/login", (req, res) => {
   var found = false;
-  var errorMsg = 'Email not found.';
+  var errorMessage = 'Email not found.';
   for (let user in userDatabase) {
     let currentUser = userDatabase[user];
     if (currentUser.email === req.body.email) {
       if (bcrypt.compareSync(req.body.password, currentUser.password)) {
         found = currentUser;
       } else {
-        errorMsg = 'Invalid password.';
-        res.redirect("/error");
+        errorMessage = 'Incorrect password!';
       }
     }
   }
   if (found) {
     req.session.user_id = found.id;
+    res.redirect('/urls');
   } else {
-    errors.push(errorMsg);
-    res.redirect("/error");
+    errors.push(errorMessage);
+    res.redirect("/error")
   }
-  res.redirect('/urls');
+
 });
 
 app.post("/logout", (req, res) => {
