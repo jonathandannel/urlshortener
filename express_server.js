@@ -24,10 +24,22 @@ function generateRandomString() {
 }
 
 var urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com",
-  "33n1hf": "http://www.help.net"
-};
+  "b2xVn2": {
+    short: "b2xVn2",
+    long: "http://www.lighthouselabs.ca",
+    belongsTo: "userId"
+  },
+  "9sm5xK": {
+    short: "9sm5xK",
+    long: "http://www.google.com",
+    belongsTo: "userId"
+  },
+  "33n1hf": {
+    short: "33n1hf",
+    long: "http://www.help.net",
+    belongsTo: "userId"
+  }
+}
 
 const userDatabase = {
   "userRandomID": {
@@ -47,14 +59,18 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  let entries = Object.entries(urlDatabase); //array of key/value
-  let templateVars = { user: userDatabase[req.cookies['user_id']], urls: entries };
+  let templateVars = { user: userDatabase[req.cookies['user_id']], urls: urlDatabase };
   res.render("urls_index", templateVars)
 });
 
 app.post("/urls", (req, res) => {
   var generatedUrl = generateRandomString();
-  urlDatabase['' + generatedUrl] = req.body.longURL;
+  urlDatabase['' + generatedUrl] = {
+    short: generatedUrl,
+    long: req.body.longURL,
+    belongsTo: 'sadasdasd'
+  };
+
   res.redirect("/urls/" + generatedUrl);
 });
 
@@ -64,8 +80,13 @@ app.get("/urls/new", (req, res) => {
 })
 
 app.get("/urls/:id", (req, res) => {
-  let templateVars = { user: userDatabase[req.cookies['user_id']], shortURL: [req.params.id, urlDatabase[req.params.id]] };
+  let templateVars = { user: userDatabase[req.cookies['user_id']], url:  urlDatabase[req.params.id] };
   res.render("urls_show", templateVars);
+});
+
+app.post("/urls/:id/edit", (req, res) => {
+  urlDatabase[req.params.id].long = req.body.changedURL;
+  res.redirect("/urls");
 });
 
 app.get("/u/:shortURL", (req, res) => {
@@ -94,10 +115,6 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect("/urls");
 });
 
-app.post("/urls/:id/edit", (req, res) => {
-  urlDatabase[req.params.id] = req.body.changedURL;
-  res.redirect("/urls");
-});
 
 app.post("/login", (req, res) => {
   console.log(req.body);

@@ -1,12 +1,13 @@
 <% include partials/header %>
 
   <div class="container" align="center">
-    <h1 id="shortURL">Tiny: <a href="#"><%= shortURL[0] %></a></h1>
+    <h1 id="shortURL">Tiny: <a href="#"><%= url.short %></a></h1>
     <button type="button" class="btn btn-success" id="copyButton">Copy</button>
   </div>
-  <h1 align="center"> Source: <a href="#"><%= shortURL[1] %></a></h1>
+  <h1 align="center"> Source: <a href="#"><%= url.long %></a></h1>
+  <h1 align="center">Created by <%= url.belongsTo %></h1>
 
-  <form action="/urls/<%= shortURL[0] %>/edit" method="POST" style="margin:150px;" align="center">
+  <form action="/urls/<%= url.short %>/edit" method="POST" style="margin:150px;" align="center">
     <label for="changedURL">Enter a URL:</label>
     <input id="changedURL" type="text" name="changedURL" placeholder="Change long URL" style="width: 300px">
     <input type="submit" value="Update">
