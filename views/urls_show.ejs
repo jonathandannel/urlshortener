@@ -1,7 +1,7 @@
 <% include partials/header %>
 
   <div class="container" align="center">
-    <h1 id="shortURL">Tiny: <a href="#"><%= url.short %></a></h1>
+    <h1 id="shortURL">Tiny: <a href="/u/<%= url.short %>"><%= url.short %></a></h1>
     <button type="button" class="btn btn-success" id="copyButton">Copy</button>
   </div>
   <h1 align="center"> Source: <a href="#"><%= url.long %></a></h1>

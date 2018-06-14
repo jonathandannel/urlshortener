@@ -6,9 +6,6 @@ const bcrypt = require('bcrypt');
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
-// const cookieParser = require("cookie-parser");
-// app.use(cookieParser());
-
 var cookieSession = require('cookie-session')
 app.use(cookieSession({
   name: 'session',
@@ -18,18 +15,7 @@ app.use(cookieSession({
 app.use(express.static(__dirname + '/public'));
 app.set("view engine", "ejs");
 
-function generateRandomString() {
-  var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  var numbers = '0123456789';
-  var output = '';
-  for (i = 0; i < 3; i++) {
-    var currentLetter = Math.floor(Math.random() * 52);
-    var currentNumber = Math.floor(Math.random() * 9);
-    output += letters[currentLetter];
-    output += numbers[currentNumber];
-  }
-  return output;
-}
+////////////////////////////////////
 
 var urlDatabase = {
   "b2xVn2": {
@@ -62,6 +48,23 @@ const userDatabase = {
   }
 }
 
+////////////////////////////////
+
+function generateRandomString() {
+  var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var numbers = '0123456789';
+  var output = '';
+  for (i = 0; i < 3; i++) {
+    var currentLetter = Math.floor(Math.random() * 52);
+    var currentNumber = Math.floor(Math.random() * 10);
+    output += letters[currentLetter];
+    output += numbers[currentNumber];
+  }
+  return output;
+}
+
+////////////////////////////////////
+
 app.get("/", (req, res) => {
   res.end("Hello!");
 });
@@ -79,11 +82,11 @@ app.post("/urls", (req, res) => {
     belongsTo: req.session.user_id
   };
 
-  res.redirect("/urls/" + generatedUrl);
+  res.redirect("/urls");
 });
 
 app.get("/urls/new", (req, res) => {
-  var templateVars = { user: userDatabase[req.session.user_id], userList: userDatabase };
+  var templateVars = { user: [req.session.user_id], urls: urlDatabase, userList: userDatabase };
   res.render("urls_new", templateVars);
 })
 
@@ -99,8 +102,7 @@ app.post("/urls/:id/edit", (req, res) => {
 });
 
 app.get("/u/:shortURL", (req, res) => {
-  var short = req.params.shortURL;
-  var long = urlDatabase[short];
+  var long = urlDatabase[req.params.shortURL].long;
   res.redirect(long);
 });
 
@@ -125,7 +127,6 @@ app.post("/urls/:id/delete", (req, res) => {
   delete urlDatabase[req.params.id];
   res.redirect("/urls");
 });
-
 
 app.post("/login", (req, res) => {
   var found = false;
@@ -159,8 +160,10 @@ app.get("/register", (req, res) => {
 
 app.get("/login", (req, res) => {
   res.render("login");
-})
+});
+
+////////////////////////////////////
 
 app.listen(PORT, () => {
-  console.log(`Express server listening on port ${PORT}`);
+  console.log(` => * tinyApp server listening on port ${PORT} *`);
 });

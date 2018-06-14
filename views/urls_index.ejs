@@ -5,8 +5,8 @@
     <% for (var url in urls) { %>
       <% if (urls[url].belongsTo == user) { %>
       <tr>
-        <td><h2><a href="/urls/<%= url %>"><%= urls[url].short %></a><td>
-          <td class="url-table-items"><a href="<%=  %>"><%= urls[url].long %></a></h2></td>
+        <td><h2><a href="/urls/<%= urls[url].short %>"><%= urls[url].short %></a><td>
+          <td class="url-table-items"><a href="<%= urls[url].long %>"><%= urls[url].long %></a></h2></td>
         <td class="url-table-ietms">
           <a href="/urls/<%= url %>"<btn class="btn btn-info" style="margin-bottom: 5px">
             Edit
