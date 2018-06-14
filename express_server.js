@@ -6,8 +6,14 @@ const bcrypt = require('bcrypt');
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
-const cookieParser = require("cookie-parser");
-app.use(cookieParser());
+// const cookieParser = require("cookie-parser");
+// app.use(cookieParser());
+
+var cookieSession = require('cookie-session')
+app.use(cookieSession({
+  name: 'session',
+  keys: ['user_id']
+}));
 
 app.use(express.static(__dirname + '/public'));
 app.set("view engine", "ejs");
@@ -61,7 +67,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  let templateVars = { user: [req.cookies['user_id']], urls: urlDatabase, userList: userDatabase};
+  let templateVars = { user: [req.session.user_id], urls: urlDatabase, userList: userDatabase};
   res.render("urls_index", templateVars);
 });
 
@@ -70,19 +76,19 @@ app.post("/urls", (req, res) => {
   urlDatabase['' + generatedUrl] = {
     short: generatedUrl,
     long: req.body.longURL,
-    belongsTo: req.cookies['user_id']
+    belongsTo: req.session.user_id
   };
 
   res.redirect("/urls/" + generatedUrl);
 });
 
 app.get("/urls/new", (req, res) => {
-  var templateVars = { user: userDatabase[req.cookies['user_id']], userList: userDatabase };
+  var templateVars = { user: userDatabase[req.session.user_id], userList: userDatabase };
   res.render("urls_new", templateVars);
 })
 
 app.get("/urls/:id", (req, res) => {
-  let templateVars = { user: req.cookies['user_id'], url:  urlDatabase[req.params.id], userList: userDatabase };
+  let templateVars = { user: req.session.user_id, url:  urlDatabase[req.params.id], userList: userDatabase };
   console.log(templateVars);
   res.render("urls_show", templateVars);
 });
@@ -111,7 +117,7 @@ app.post("/register", (req, res) => {
   };
   console.log(hashedPassword);
 
-  res.cookie('user_id', id);
+  req.session.user_id = id;
   res.redirect('/urls');
 });
 
@@ -135,7 +141,7 @@ app.post("/login", (req, res) => {
     }
   }
   if (found) {
-    res.cookie('user_id', found.id);
+    req.session.user_id = found.id;
   } else {
     console.log(errorMsg);
   }
@@ -143,7 +149,7 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-  res.clearCookie('user_id');
+  req.session = null;
   res.redirect('/urls');
 });
 
