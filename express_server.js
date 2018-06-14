@@ -64,10 +64,17 @@ function generateRandomString() {
 }
 
 ////////////////////////////////////
+let errors = [];
 
 app.get("/", (req, res) => {
   res.redirect("/urls");
 });
+
+app.get("/error", (req, res) => {
+  let templateVars = { errorList: errors, user: [req.session.user_id], urls: urlDatabase, userList: userDatabase };
+  res.render("error", templateVars)
+});
+
 
 app.get("/urls", (req, res) => {
   let templateVars = { user: [req.session.user_id], urls: urlDatabase, userList: userDatabase};
@@ -109,18 +116,25 @@ app.get("/u/:shortURL", (req, res) => {
 app.post("/register", (req, res) => {
   var id = generateRandomString();
   var email = req.body.email;
-  var password = req.body.password;
-  var hashedPassword = bcrypt.hashSync(password, 10);
+  var password = req.body.password? req.body.password : null;
 
-  userDatabase[id] = {
-    id: id,
-    email: email,
-    password: hashedPassword
-  };
-  console.log(hashedPassword);
+  if (password !== null) {
+    var hashedPassword = bcrypt.hashSync(password, 10);
 
-  req.session.user_id = id;
-  res.redirect('/urls');
+    userDatabase[id] = {
+      id: id,
+      email: email,
+      password: hashedPassword
+    };
+    console.log(hashedPassword);
+    req.session.user_id = id;
+    res.redirect('/urls');
+  } else {
+    res.status(403);
+    errors.push('You must enter a valid password.');
+    res.redirect("/error");
+  }
+
 });
 
 app.post("/urls/:id/delete", (req, res) => {
@@ -137,14 +151,16 @@ app.post("/login", (req, res) => {
       if (bcrypt.compareSync(req.body.password, currentUser.password)) {
         found = currentUser;
       } else {
-        errorMsg = 'Incorrect password!';
+        errorMsg = 'Invalid password.';
+        res.redirect("/error");
       }
     }
   }
   if (found) {
     req.session.user_id = found.id;
   } else {
-    console.log(errorMsg);
+    errors.push(errorMsg);
+    res.redirect("/error");
   }
   res.redirect('/urls');
 });
