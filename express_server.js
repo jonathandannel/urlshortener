@@ -118,8 +118,19 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.post("/register", (req, res) => {
   var id = generateRandomString();
-  var email = req.body.email;
   var password = req.body.password? req.body.password : null;
+  var email = '';
+
+  if (req.body.email) {
+    for (key in userDatabase) {
+      if (userDatabase[key].email === req.body.email) {
+        errors.push('Email already registered.');
+        res.redirect("/error");
+      } else {
+      email = req.body.email;
+    }
+  }
+}
 
   if (password !== null) {
     var hashedPassword = bcrypt.hashSync(password, 10);
