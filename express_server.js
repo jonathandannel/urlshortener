@@ -99,6 +99,10 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:id", (req, res) => {
   let templateVars = { user: req.session.user_id, url:  urlDatabase[req.params.id], userList: userDatabase };
   console.log(templateVars);
+  if (urlDatabase[req.params.id].belongsTo !== req.session.user_id) {
+    errors.push("You do not have permissions to edit or access this URL.")
+    res.redirect("/error");
+  }
   res.render("urls_show", templateVars);
 });
 
