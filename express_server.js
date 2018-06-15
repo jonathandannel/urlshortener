@@ -75,7 +75,6 @@ app.get("/error", (req, res) => {
   res.render("error", templateVars)
 });
 
-
 app.get("/urls", (req, res) => {
   let templateVars = { user: [req.session.user_id], urls: urlDatabase, userList: userDatabase};
   res.render("urls_index", templateVars);
@@ -120,7 +119,6 @@ app.post("/register", (req, res) => {
 
   if (password !== null) {
     var hashedPassword = bcrypt.hashSync(password, 10);
-
     userDatabase[id] = {
       id: id,
       email: email,
@@ -134,7 +132,6 @@ app.post("/register", (req, res) => {
     errors.push('You must enter a valid password.');
     res.redirect("/error");
   }
-
 });
 
 app.post("/urls/:id/delete", (req, res) => {
@@ -144,25 +141,28 @@ app.post("/urls/:id/delete", (req, res) => {
 
 app.post("/login", (req, res) => {
   var found = false;
-  var errorMessage = 'Email not found.';
+  var errorMessage = 'Email not found.'
   for (let user in userDatabase) {
     let currentUser = userDatabase[user];
     if (currentUser.email === req.body.email) {
       if (bcrypt.compareSync(req.body.password, currentUser.password)) {
         found = currentUser;
       } else {
-        errorMessage = 'Incorrect password!';
+        errorMessage = 'Incorrect password.'
       }
     }
   }
+
   if (found) {
     req.session.user_id = found.id;
     res.redirect('/urls');
   } else {
     errors.push(errorMessage);
-    res.redirect("/error")
+    if (errors.length > 1) {
+      errors.shift();
+    }
+    res.redirect("/error");
   }
-
 });
 
 app.post("/logout", (req, res) => {
