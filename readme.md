@@ -10,6 +10,6 @@ A simple URL shortener app built with Node and Express.
 - body-parser
 - cookie-session
 
-##Getting Started
+## Getting Started
 - Clone the project and run `npm install`.
 - Run the development web server with `node express_server.js`
