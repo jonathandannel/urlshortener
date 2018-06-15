@@ -6,10 +6,10 @@
   </div>
   <h1 align="center"> Source: <a href="#"><%= url.long %></a></h1>
 
-  <form action="/urls/<%= url.short %>/edit" method="POST" style="margin:150px;" align="center">
-    <label for="changedURL">Enter a URL:</label>
-    <input id="changedURL" type="text" name="changedURL" placeholder="Change long URL" style="width: 300px">
-    <input type="submit" value="Update">
+  <form action="/urls/<%= url.short %>/edit" method="POST" align="center" style="margin: 30px">
+    <label for="changedURL">Edit source URL:</label>
+    <input id="changedURL" type="text" name="changedURL" placeholder="http://" style="width: 300px;">
+    <input type="submit" value="Update" class="btn btn-success">
   </form>
 
 <% include partials/footer %>

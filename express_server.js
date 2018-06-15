@@ -1,12 +1,12 @@
-var express = require("express");
-var app = express();
-var PORT = 8080;
+const express = require("express");
+const app = express();
+const PORT = 8080;
 const bcrypt = require('bcrypt');
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
-var cookieSession = require('cookie-session')
+const cookieSession = require('cookie-session')
 app.use(cookieSession({
   name: 'session',
   keys: ['user_id']
@@ -17,7 +17,7 @@ app.set("view engine", "ejs");
 
 ////////////////////////////////////
 
-var urlDatabase = {
+let urlDatabase = {
   "b2xVn2": {
     short: "b2xVn2",
     long: "http://www.lighthouselabs.ca",
@@ -35,7 +35,7 @@ var urlDatabase = {
   }
 }
 
-const userDatabase = {
+let userDatabase = {
   "userRandomID": {
     id: "userRandomID",
     email: "user@example.com",
@@ -48,15 +48,15 @@ const userDatabase = {
   }
 }
 
-////////////////////////////////
+////////////////////////////////////
 
 function generateRandomString() {
-  var letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  var numbers = '0123456789';
-  var output = '';
-  for (i = 0; i < 3; i++) {
-    var currentLetter = Math.floor(Math.random() * 52);
-    var currentNumber = Math.floor(Math.random() * 10);
+  let letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let numbers = '0123456789';
+  let output = '';
+  for (let i = 0; i < 3; i++) {
+    let currentLetter = Math.floor(Math.random() * 52);
+    let currentNumber = Math.floor(Math.random() * 10);
     output += letters[currentLetter];
     output += numbers[currentNumber];
   }
@@ -81,7 +81,7 @@ app.get("/urls", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  var generatedUrl = generateRandomString();
+  let generatedUrl = generateRandomString();
   urlDatabase['' + generatedUrl] = {
     short: generatedUrl,
     long: req.body.longURL,
@@ -92,7 +92,7 @@ app.post("/urls", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
-  var templateVars = { user: [req.session.user_id], urls: urlDatabase, userList: userDatabase };
+  let templateVars = { user: [req.session.user_id], urls: urlDatabase, userList: userDatabase };
   res.render("urls_new", templateVars);
 })
 
@@ -112,28 +112,28 @@ app.post("/urls/:id/edit", (req, res) => {
 });
 
 app.get("/u/:shortURL", (req, res) => {
-  var long = urlDatabase[req.params.shortURL].long;
+  let long = urlDatabase[req.params.shortURL].long;
   res.redirect(long);
 });
 
 app.post("/register", (req, res) => {
-  var id = generateRandomString();
-  var password = req.body.password? req.body.password : null;
-  var email = '';
+  let id = generateRandomString();
+  let password = req.body.password? req.body.password : null;
+  let email = '';
 
   if (req.body.email) {
-    for (key in userDatabase) {
+    for (let key in userDatabase) {
       if (userDatabase[key].email === req.body.email) {
         errors.push('Email already registered.');
         res.redirect("/error");
       } else {
       email = req.body.email;
+      }
     }
   }
-}
 
   if (password !== null) {
-    var hashedPassword = bcrypt.hashSync(password, 10);
+    let hashedPassword = bcrypt.hashSync(password, 10);
     userDatabase[id] = {
       id: id,
       email: email,
@@ -155,8 +155,8 @@ app.post("/urls/:id/delete", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  var found = false;
-  var errorMessage = 'Email not found.'
+  let found = false;
+  let errorMessage = 'Email not found.'
   for (let user in userDatabase) {
     let currentUser = userDatabase[user];
     if (currentUser.email === req.body.email) {
