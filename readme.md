@@ -1,9 +1,7 @@
 # tinyApp
 A simple URL shortener app built with Node and Express.
-<sub>A Lighthouse Labs 2018 Project)</sub>
 
-
-## Screenshots
+![alt text](https://github.com/jonathandannel/urlshortener/blob/master/screenshot1.png?raw=true)
 
 ## Dependencies
 Node.js
