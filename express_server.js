@@ -118,7 +118,7 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.post("/register", (req, res) => {
   let id = generateRandomString();
-  let password = req.body.password? req.body.password : null;
+  let password = req.body.password ? req.body.password : null;
   let email = '';
 
   if (req.body.email) {
