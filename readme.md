@@ -17,3 +17,4 @@ A tiny URL shortener app built with Node and Express. This project utilizes HTTP
 ## To Do
 - Add analytics.
 - Remove inline styling.
+- Properly update error messages on failed login.
