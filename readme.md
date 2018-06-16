@@ -1,5 +1,5 @@
 # tinyApp
-A simple URL shortener app built with Node and Express.
+A tiny URL shortener app built with Node and Express. This project utilizes HTTP requests, simple routing, authentication, encrypted passwords/cookies, and sessions.
 
 ![alt text](https://github.com/jonathandannel/urlshortener/blob/master/screenshot1.png?raw=true)
 
@@ -13,3 +13,7 @@ A simple URL shortener app built with Node and Express.
 ## Getting Started
 - Clone the project and run `npm install`.
 - Run the development web server with `node express_server.js`
+
+## To Do
+- Add analytics.
+- Remove inline styling.
